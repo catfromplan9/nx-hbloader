@@ -4,6 +4,7 @@
 #include <unistd.h>
 
 #define DEFAULT_NRO "sdmc:/hbmenu.nro"
+#define APPLET_NRO "sdmc:/switch/NXGallery.nro"
 
 const char g_noticeText[] =
     "nx-hbloader " VERSION "\0"
@@ -353,8 +354,13 @@ void loadNro(void)
 
     if (g_nextNroPath[0] == '\0')
     {
-        memcpy(g_nextNroPath, DEFAULT_NRO, sizeof(DEFAULT_NRO));
-        memcpy(g_nextArgv,    DEFAULT_NRO, sizeof(DEFAULT_NRO));
+        if (!g_isApplication) {
+            memcpy(g_nextNroPath, APPLET_NRO, sizeof(APPLET_NRO));
+            memcpy(g_nextArgv,    APPLET_NRO, sizeof(APPLET_NRO));
+        } else {
+            memcpy(g_nextNroPath, DEFAULT_NRO, sizeof(DEFAULT_NRO));
+            memcpy(g_nextArgv,    DEFAULT_NRO, sizeof(DEFAULT_NRO));
+        }
     }
 
     memcpy(g_argv, g_nextArgv, sizeof g_argv);
